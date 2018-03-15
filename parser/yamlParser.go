@@ -38,32 +38,14 @@ func parseFile() {
 func ExecuteCommand(cmd string) {
 	parseFile()
 
-	if !stringInMap(cmd, yamlContent.Commands) {
-		os.Stderr.WriteString("Error: Command not found")
-		os.Exit(1)
-	}
-
-	for key, value := range yamlContent.Commands {
-		if key == cmd {
-			for _, command := range value {
-				instruction := exec.Command(command)
-				cmdOutput := &bytes.Buffer{}
-				instruction.Stdout = cmdOutput
-				err := instruction.Run()
-				if err != nil {
-					os.Stderr.WriteString(err.Error())
-				}
-				fmt.Print(string(cmdOutput.Bytes()))
-			}
+	for _, command := range yamlContent.findCommand(cmd) {
+		instruction := exec.Command(command)
+		cmdOutput := &bytes.Buffer{}
+		instruction.Stdout = cmdOutput
+		err := instruction.Run()
+		if err != nil {
+			os.Stderr.WriteString(err.Error())
 		}
+		fmt.Print(string(cmdOutput.Bytes()))
 	}
-}
-
-func stringInMap(a string, list map[string][]string) bool {
-	for b := range list {
-		if b == a {
-			return true
-		}
-	}
-	return false
 }
