@@ -39,7 +39,7 @@ func ExecuteCommand(cmd string) {
 	parseFile()
 
 	for _, command := range yamlContent.findCommand(cmd) {
-		instruction := exec.Command(command)
+		instruction := exec.Command("sh", "-c", command)
 		cmdOutput := &bytes.Buffer{}
 		instruction.Stdout = cmdOutput
 		err := instruction.Run()
