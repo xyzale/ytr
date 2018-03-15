@@ -1,0 +1,7 @@
+commands:
+  example:
+    - pwd
+    - ls
+  createfile:
+    - echo "build" > foo.txt
+    - cat foo.txt
