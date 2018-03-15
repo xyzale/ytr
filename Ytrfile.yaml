@@ -2,6 +2,7 @@ commands:
   example:
     - pwd
     - ls
-  createfile:
-    - echo "build" > foo.txt
-    - cat foo.txt
+  buildme:
+    - go build
+    - mv ytr /usr/local/bin
+    - echo "Built and moved to /usr/local/bin"
